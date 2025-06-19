@@ -35,6 +35,9 @@ public class Meal {
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MealIngredient> mealIngredients = new HashSet<>();
 
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MealHasTag> mealTags = new HashSet<>();
+
     // Constructors
     public Meal() {}
 
@@ -53,6 +56,15 @@ public class Meal {
     public void removeMealIngredient(MealIngredient mealIngredient) {
         this.mealIngredients.remove(mealIngredient);
         mealIngredient.setMeal(null);
+    }
+
+    public void addMealTag(MealTag tag) {
+        MealHasTag mealHasTag = new MealHasTag(this, tag);
+        this.mealTags.add(mealHasTag);
+    }
+
+    public void removeMealTag(MealTag tag) {
+        this.mealTags.removeIf(mht -> mht.getMealTag().equals(tag));
     }
 
     // Getters and Setters
@@ -110,5 +122,13 @@ public class Meal {
 
     public void setMealIngredients(Set<MealIngredient> mealIngredients) {
         this.mealIngredients = mealIngredients;
+    }
+
+    public Set<MealHasTag> getMealTags() {
+        return mealTags;
+    }
+
+    public void setMealTags(Set<MealHasTag> mealTags) {
+        this.mealTags = mealTags;
     }
 }

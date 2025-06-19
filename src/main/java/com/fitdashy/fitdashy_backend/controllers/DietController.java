@@ -27,17 +27,39 @@ public class DietController {
         this.mealService = mealService;
     }
 
+//    @GetMapping("/meals")
+//    public ResponseEntity<?> getMeals(@ModelAttribute MealSearchRequest searchDto,
+//                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        // Extract current user ID from Spring Security's UserDetails
+//        // This ID is used by the service to handle public/private meal visibility.
+//        Integer currentUserId = null;
+//        if (userDetails != null) {
+//            currentUserId = userDetails.getId();
+//        }
+//
+//        List<MealResponse> meals = mealService.searchMeals(searchDto, currentUserId);
+//
+//        if (meals.isEmpty()) {
+//            // Return 204 No Content if no meals match the criteria
+//            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new MessageResponse("No meals were found."));
+//        } else {
+//            // Return 200 OK with the list of matching meals
+//            return ResponseEntity
+//                    .status(HttpStatus.OK)
+//                    .body(meals);
+//        }
+//    }
+
     @GetMapping("/meals")
-    public ResponseEntity<?> getMeals(@ModelAttribute MealSearchRequest searchDto,
-                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<?> getMeals() {
         // Extract current user ID from Spring Security's UserDetails
         // This ID is used by the service to handle public/private meal visibility.
-        Integer currentUserId = null;
-        if (userDetails != null) {
-            currentUserId = userDetails.getId();
-        }
+//        Integer currentUserId = null;
+//        if (userDetails != null) {
+//            currentUserId = userDetails.getId();
+//        }
 
-        List<MealResponse> meals = mealService.searchMeals(searchDto, currentUserId);
+        List<MealResponse> meals = mealService.searchMeals();
 
         if (meals.isEmpty()) {
             // Return 204 No Content if no meals match the criteria

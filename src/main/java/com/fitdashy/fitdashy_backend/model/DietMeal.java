@@ -26,9 +26,6 @@ public class DietMeal {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    @Column(name = "weight", nullable = false, precision = 6, scale = 1)
-    private BigDecimal weight;
-
     // Relationship to DietIngredient: One DietMeal can have many DietIngredients
     @OneToMany(mappedBy = "dietMeal", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DietIngredient> dietIngredients = new HashSet<>();
@@ -36,11 +33,10 @@ public class DietMeal {
     // Constructors
     public DietMeal() {}
 
-    public DietMeal(User user, Meal meal, LocalDateTime timestamp, BigDecimal weight) {
+    public DietMeal(User user, Meal meal, LocalDateTime timestamp) {
         this.user = user;
         this.meal = meal;
         this.timestamp = timestamp;
-        this.weight = weight;
     }
 
     // Helper methods for managing diet ingredients
@@ -85,14 +81,6 @@ public class DietMeal {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public BigDecimal getWeight() {
-        return weight;
-    }
-
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
     }
 
     public Set<DietIngredient> getDietIngredients() {

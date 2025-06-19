@@ -2,8 +2,8 @@ package com.fitdashy.fitdashy_backend.payload.responses;
 
 public class MealIngredientResponse {
 
-    private Integer ingredientId;
-    private String ingredientName;
+    private Integer id;
+    private String name;
     private Double weight;
     private Double calories;
     private Double protein;
@@ -14,9 +14,9 @@ public class MealIngredientResponse {
     public MealIngredientResponse() {
     }
 
-    public MealIngredientResponse(Integer ingredientId, String ingredientName, Double weight, Double calories, Double protein, Double carbs, Double fat) {
-        this.ingredientId = ingredientId;
-        this.ingredientName = ingredientName;
+    public MealIngredientResponse(Integer id, String name, Double weight, Double calories, Double protein, Double carbs, Double fat) {
+        this.id = id;
+        this.name = name;
         this.weight = weight;
         this.calories = calories;
         this.protein = protein;
@@ -24,20 +24,20 @@ public class MealIngredientResponse {
         this.fat = fat;
     }
 
-    public Integer getIngredientId() {
-        return ingredientId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIngredientId(Integer ingredientId) {
-        this.ingredientId = ingredientId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getIngredientName() {
-        return ingredientName;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getWeight() {

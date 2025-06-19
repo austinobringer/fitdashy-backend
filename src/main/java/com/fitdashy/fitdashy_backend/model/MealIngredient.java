@@ -23,29 +23,13 @@ public class MealIngredient {
     @Column(name = "weight", nullable = false, precision = 6, scale = 1)
     private BigDecimal weight;
 
-    @Column(name = "calories", nullable = false, precision = 6, scale = 0)
-    private Integer calories;
-
-    @Column(name = "protein", precision = 6, scale = 1)
-    private BigDecimal protein;
-
-    @Column(name = "carbs", precision = 6, scale = 1)
-    private BigDecimal carbs;
-
-    @Column(name = "fat", precision = 6, scale = 1)
-    private BigDecimal fat;
-
     // Constructors
     public MealIngredient() {}
 
-    public MealIngredient(Meal meal, Ingredient ingredient, BigDecimal weight, Integer calories, BigDecimal protein, BigDecimal carbs, BigDecimal fat) {
+    public MealIngredient(Meal meal, Ingredient ingredient, BigDecimal weight) {
         this.meal = meal;
         this.ingredient = ingredient;
         this.weight = weight;
-        this.calories = calories;
-        this.protein = protein;
-        this.carbs = carbs;
-        this.fat = fat;
     }
 
     // Getters and Setters
@@ -79,37 +63,5 @@ public class MealIngredient {
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
-    }
-
-    public Integer getCalories() {
-        return calories;
-    }
-
-    public void setCalories(Integer calories) {
-        this.calories = calories;
-    }
-
-    public BigDecimal getProtein() {
-        return protein;
-    }
-
-    public void setProtein(BigDecimal protein) {
-        this.protein = protein;
-    }
-
-    public BigDecimal getCarbs() {
-        return carbs;
-    }
-
-    public void setCarbs(BigDecimal carbs) {
-        this.carbs = carbs;
-    }
-
-    public BigDecimal getFat() {
-        return fat;
-    }
-
-    public void setFat(BigDecimal fat) {
-        this.fat = fat;
     }
 }

@@ -4,36 +4,40 @@ import java.util.List;
 
 public class MealResponse {
 
-    private Integer mealId;
+    private Integer id;
     private String name;
-    private Integer amount; // Or perhaps a range?  Consider minAmount and maxAmount
+    private String owner;
+    private Integer usage;
     private Double totalCalories;
     private Double totalCarbs;
     private Double totalProtein;
     private Double totalFat;
+    private List<MealTagResponse> tags;
     private List<MealIngredientResponse> ingredients;
 
     // Constructors, Getters, and Setters
     public MealResponse() {
     }
 
-    public MealResponse(Integer mealId, String name, Integer amount, Double totalCalories, Double totalCarbs, Double totalProtein, Double totalFat, List<MealIngredientResponse> ingredients) {
-        this.mealId = mealId;
+    public MealResponse(Integer id, String name, String owner, Integer usage, Double totalCalories, Double totalCarbs, Double totalProtein, Double totalFat, List<MealTagResponse> tags, List<MealIngredientResponse> ingredients) {
+        this.id = id;
         this.name = name;
-        this.amount = amount;
+        this.owner = owner;
+        this.usage = usage;
         this.totalCalories = totalCalories;
         this.totalCarbs = totalCarbs;
         this.totalProtein = totalProtein;
         this.totalFat = totalFat;
+        this.tags = tags;
         this.ingredients = ingredients;
     }
 
-    public Integer getMealId() {
-        return mealId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMealId(Integer mealId) {
-        this.mealId = mealId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -44,12 +48,20 @@ public class MealResponse {
         this.name = name;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public Integer getUsage() {
+        return usage;
+    }
+
+    public void setUsage(Integer usage) {
+        this.usage = usage;
     }
 
     public Double getTotalCalories() {
@@ -82,6 +94,14 @@ public class MealResponse {
 
     public void setTotalFat(Double totalFat) {
         this.totalFat = totalFat;
+    }
+
+    public List<MealTagResponse> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<MealTagResponse> tags) {
+        this.tags = tags;
     }
 
     public List<MealIngredientResponse> getIngredients() {

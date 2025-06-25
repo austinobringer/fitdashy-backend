@@ -92,9 +92,8 @@ public class JwtUtils {
     }
 
     // Validate a JWT token
-    public boolean validateJwtToken(String authToken) {
+    public void validateJwtToken(String authToken) {
         getParseBuilderForJWTToken(authToken).parse(authToken);
-        return true;
     }
 
     // Retrieve a username from a JWT token

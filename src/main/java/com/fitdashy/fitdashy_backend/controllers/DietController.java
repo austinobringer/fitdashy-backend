@@ -1,7 +1,9 @@
 package com.fitdashy.fitdashy_backend.controllers;
 
+import com.fitdashy.fitdashy_backend.model.MealTag;
 import com.fitdashy.fitdashy_backend.payload.requests.MealSearchRequest;
 import com.fitdashy.fitdashy_backend.payload.responses.MealResponse;
+import com.fitdashy.fitdashy_backend.payload.responses.MealTagResponse;
 import com.fitdashy.fitdashy_backend.payload.responses.MessageResponse;
 import com.fitdashy.fitdashy_backend.security.services.UserDetailsImpl;
 import com.fitdashy.fitdashy_backend.services.MealService;
@@ -69,6 +71,19 @@ public class DietController {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(meals);
+        }
+    }
+
+    @GetMapping("/tags")
+    public ResponseEntity<?> getTags() {
+        List<MealTagResponse> tags = mealService.getAllMealTags();
+
+        if (tags.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new MessageResponse("No tags were found."));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(tags);
         }
     }
 }

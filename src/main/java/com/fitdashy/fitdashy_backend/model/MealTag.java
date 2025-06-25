@@ -1,5 +1,6 @@
 package com.fitdashy.fitdashy_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,6 +23,7 @@ public class MealTag {
     @Column(name = "usage_count")
     private Integer usageCount = 0; // Number of times this meal tag has been used
 
+    @JsonIgnore
     @OneToMany(mappedBy = "mealTag", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MealHasTag> taggedMeals = new HashSet<>();
 

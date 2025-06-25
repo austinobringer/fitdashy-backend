@@ -6,6 +6,7 @@ import com.fitdashy.fitdashy_backend.payload.responses.MealResponse;
 import com.fitdashy.fitdashy_backend.payload.responses.MealIngredientResponse;
 import com.fitdashy.fitdashy_backend.payload.responses.MealTagResponse;
 import com.fitdashy.fitdashy_backend.repository.MealRepository;
+import com.fitdashy.fitdashy_backend.repository.MealTagRepository;
 import com.fitdashy.fitdashy_backend.repository.UserRepository;
 
 import jakarta.persistence.criteria.Predicate;
@@ -25,11 +26,36 @@ public class MealService {
 
     private final MealRepository mealRepository;
     private final UserRepository userRepository; // To fetch user details for response
+    private final MealTagRepository mealTagRepository;
 
     @Autowired
-    public MealService(MealRepository mealRepository, UserRepository userRepository) {
+    public MealService(MealRepository mealRepository, UserRepository userRepository,
+                       MealTagRepository mealTagRepository) {
         this.mealRepository = mealRepository;
         this.userRepository = userRepository;
+        this.mealTagRepository = mealTagRepository;
+    }
+
+    /**
+     * Retrieves all meal tags available in the system.
+     *
+     * @return A list of all MealTag entities.
+     */
+    public List<MealTagResponse> getAllMealTags() {
+        List<MealTag> mealTags = mealTagRepository.findAll();
+
+        List<MealTagResponse> filteredMealTags = mealTags.stream()
+            .map(meal -> {
+                MealTagResponse mealTagResponse = new MealTagResponse();
+                mealTagResponse.setId(meal.getMealTagId());
+                mealTagResponse.setName(meal.getTagName());
+                mealTagResponse.setColor(meal.getTagColor());
+
+                return mealTagResponse;
+            })
+            .toList();
+
+        return filteredMealTags;
     }
 
     /**

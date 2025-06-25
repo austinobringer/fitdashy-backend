@@ -2,8 +2,6 @@ package com.fitdashy.fitdashy_backend.security.jwt;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fitdashy.fitdashy_backend.payload.responses.ErrorMessageResponse;
 import com.fitdashy.fitdashy_backend.security.services.UserDetailsServiceImpl;
 
 import jakarta.servlet.FilterChain;
@@ -15,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,20 +32,17 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-//        logger.error("Filter triggered");
-
+        // Get tokens from request
         String accessToken = jwtUtils.getAccessTokenFromRequest(request);
         String refreshToken = jwtUtils.getRefreshTokenFromRequest(request);
 
+        // If either token is present
         if (accessToken != null || refreshToken != null) {
             try {
                 jwtUtils.validateJwtToken(accessToken);
 
-                authenticateRequest(request, accessToken); // Access token is valid, and the request is authenticated
-
-                filterChain.doFilter(request, response); // Continue with the filter chain
-                return;
+                // Access token is valid, and the request is authenticated
+                authenticateRequest(request, accessToken);
             } catch (Exception e) { // Access token is invalid or missing
                 try {
                     jwtUtils.validateJwtToken(refreshToken);
@@ -58,10 +52,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                     response.addHeader(HttpHeaders.SET_COOKIE, accessTokenCookie.toString()); // Add cookie to response
 
-                    authenticateRequest(request, accessTokenCookie.getValue()); // Access token is valid, and the request is authenticated
-
-                    filterChain.doFilter(request, response); // Continue with the filter chain
-                } catch (Exception refreshEx) { // Refresh token is invalid or missing
+                    // Access token is valid, and the request is authenticated
+                    authenticateRequest(request, accessTokenCookie.getValue());
+                } catch (Exception _) { // Refresh token is invalid or missing
                 }
             }
         }
@@ -70,10 +63,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     public void authenticateRequest(HttpServletRequest request, String accessToken) {
+        // Get username from access token
         String username = jwtUtils.getUsernameFromJwtToken(accessToken);
 
+        // Get user details from username
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
+        // Authenticate the request
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(userDetails,
                         null,

@@ -161,9 +161,11 @@ public class AuthController {
 
     @GetMapping("/validate")
     public ResponseEntity<?> validateToken(HttpServletRequest request) {
+        // Get tokens
         String accessToken = jwtUtils.getAccessTokenFromRequest(request);
         String refreshToken = jwtUtils.getRefreshTokenFromRequest(request);
 
+        // Check if there are no tokens
         if (accessToken == null && refreshToken == null) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
@@ -180,12 +182,8 @@ public class AuthController {
             try {
                 jwtUtils.validateJwtToken(refreshToken);
 
-                // Refresh token is valid, generate a new access token
-                ResponseCookie accessTokenCookie = jwtUtils.refreshAccessToken(refreshToken);
-
                 return ResponseEntity
                         .status(HttpStatus.OK)
-                        .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                         .body(new MessageResponse("The access token has been refreshed, and request is authenticated"));
             } catch (Exception refreshEx) { // Refresh token is invalid or missing
                 return ResponseEntity
